@@ -1,6 +1,4 @@
 const PptxGenJS = require("pptxgenjs");
-const path = require("path");
-const fs = require("fs");
 
 exports.downloadPpt = async (req, res) => {
   try {
@@ -11,14 +9,10 @@ exports.downloadPpt = async (req, res) => {
 
     const pptx = new PptxGenJS();
 
-    slideData.slides.forEach((s, index) => {
+    slideData.slides.forEach((s) => {
       const slide = pptx.addSlide();
 
-      if (s.color) {
-        slide.background = { color: "1F2937" };
-      } else {
-        slide.background = { color: "1F2937" };
-      }
+      slide.background = { color: "1F2937" };
 
       if (s.title) {
         slide.addText(`${s.emoji || ""} ${s.title}`, {
@@ -64,23 +58,21 @@ exports.downloadPpt = async (req, res) => {
         });
       }
 
-      if (s.notes) {
-        slide.addNotes(s.notes);
-      }
+      if (s.notes) slide.addNotes(s.notes);
     });
 
-    const slidesDir = path.join(__dirname, "../slides");
-    if (!fs.existsSync(slidesDir)) fs.mkdirSync(slidesDir);
+    const pptBuffer = await pptx.write("nodebuffer");
+    
+    res.setHeader(
+      "Content-Disposition",
+      "attachment; filename=presentation.pptx"
+    );
+    res.setHeader(
+      "Content-Type",
+      "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+    );
 
-    const fileName = `slides-${Date.now()}.pptx`;
-    const filePath = path.join(slidesDir, fileName);
-
-    await pptx.writeFile({ fileName: filePath });
-
-    res.download(filePath, fileName, (err) => {
-      if (err) console.error("Download error:", err);
-      fs.unlink(filePath, () => {});
-    });
+    res.send(pptBuffer);
   } catch (err) {
     console.error("PPT generation error:", err);
     res.status(500).json({ error: "PPT download failed" });
