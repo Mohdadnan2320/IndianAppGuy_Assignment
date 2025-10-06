@@ -34,7 +34,8 @@ const WelcomeView = ({ onGenerate }: WelcomeViewProps) => {
               placeholder="Start with a topic, we'll turn it into slides!"
               value={topic}
               onChange={(e) => setTopic(e.target.value)}
-              className="border-0 bg-transparent px-4 py-6 text-base focus-visible:ring-0 md:px-6 w-auto"
+              className="border-0 bg-transparent pl-4 pr-20 py-4 md:pl-6 md:pr-24 md:py-6 text-base focus-visible:ring-0"
+             // className="border-0 bg-transparent px-4 py-6 text-base focus-visible:ring-0 md:px-6 w-auto"
             />
             <div className="absolute right-2 top-1/2 flex -translate-y-1/2 gap-2">
               <Button
