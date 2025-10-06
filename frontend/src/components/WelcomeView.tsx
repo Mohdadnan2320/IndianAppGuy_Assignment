@@ -48,6 +48,7 @@ const WelcomeView = ({ onGenerate }: WelcomeViewProps) => {
               <Button
                 type="submit"
                 size="icon"
+                variant="ghost"
                 className="h-10 w-10 rounded-lg bg-muted hover:bg-muted/80"
                 disabled={!topic.trim()}
               >
