@@ -21,7 +21,7 @@ const WelcomeView = ({ onGenerate }: WelcomeViewProps) => {
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="w-full max-w-2xl text-center">
         <h1 className="mb-3 text-4xl font-bold text-foreground md:text-5xl">
-          Hello, piyuindia4!
+          Welcome to <span>SlideGenie</span>!
         </h1>
         <p className="mb-8 text-lg text-muted-foreground md:text-xl">
           What do you want me to generate today?
